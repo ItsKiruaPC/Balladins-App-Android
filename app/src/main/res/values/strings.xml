@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Balladins</string>
+    <string name="chercher">Chercher</string>
+    <string name="code_d_acc_s">Code d\'accès</string>
+    <string name="num_ro_de_r_servation">Numéro de réservation</string>
+    <string name="rechercher_une_r_servation">Rechercher une réservation</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="supprimer_une_r_servation">Supprimer une réservation</string>
+</resources>
