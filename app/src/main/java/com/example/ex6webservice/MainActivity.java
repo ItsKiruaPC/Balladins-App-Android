@@ -1,40 +1,62 @@
 package com.example.ex6webservice;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.content.Intent;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity extends AppCompatActivity {
+
+    FrameLayout frameLayout;
+    BottomNavigationView bottomNavigationView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btnquitter = (Button) findViewById(R.id.btnquitter);
-        btnquitter.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                finish();
+
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        frameLayout = findViewById(R.id.frameLayout1);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.item_1) {
+                    loadFragment(new PageHotel(), false);
+                } else if (itemId == R.id.item_2) {
+                    loadFragment(new PageReserv(), false);
+                } else if (itemId == R.id.item_3) {
+                    loadFragment(new PageSupprimer(), false);
+                } else {
+                    Toast.makeText(getApplicationContext(), "La page demandé n'est pas disponible", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+
             }
         });
-        Button btnpage1 = (Button) findViewById(R.id.btnpage1);
-        btnpage1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, Page1.class);
-                startActivity(myIntent);
-            }
-        });
-        Button btnpage2 = (Button) findViewById(R.id.btnpage2);
-        btnpage2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, Page2.class);
-                startActivity(myIntent);
-            }
-        });
-        Button btnpage3 = (Button) findViewById(R.id.btnpage3);
-        btnpage3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, Page3.class);
-                startActivity(myIntent);
-            }
-        });
+        loadFragment(new PageHotel(), true);
     }
+
+    public void loadFragment(Fragment fragment, boolean isAppInitialized) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (isAppInitialized) {
+            fragmentTransaction.add(R.id.frameLayout1, fragment);
+        } else {
+            fragmentTransaction.replace(R.id.frameLayout1, fragment);
+        }
+        fragmentTransaction.commit();
+    }
+
 }

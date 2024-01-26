@@ -1,47 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".PageReserv">
 
     <TextView
         android:id="@+id/textview1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/rechercher_une_r_servation" />
+        android:layout_height="wrap_content"
+        android:text="@string/rechercher_une_r_servation"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textview2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="@string/num_ro_de_r_servation" />
+
     <EditText
         android:id="@+id/txtnum"
-        android:inputType="number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:inputType="number"
+        android:singleLine="true" />
+
     <TextView
         android:id="@+id/textview3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="@string/code_d_acc_s" />
+
     <EditText
         android:id="@+id/txtcode"
-        android:inputType="number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:inputType="number"
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/btnchercher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/chercher"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="180dp"
+        android:text="@string/chercher" />
 
     <ListView
         android:id="@+id/lstlycee"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:choiceMode="multipleChoice"
-        android:textAlignment="textEnd" />
+        android:layout_height="402dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="240dp"
+        android:choiceMode="multipleChoice" />
+
 </FrameLayout>
