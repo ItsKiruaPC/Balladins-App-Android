@@ -11,4 +11,7 @@
     <string name="text_label_3">Supprimer</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="les_h_tels_disponibles">Les hôtels disponibles</string>
+    <string name="image_de_l_h_tel">Image de l\'hôtel</string>
+    <string name="pr_cedent">Précedent</string>
+    <string name="suivant">Suivant</string>
 </resources>

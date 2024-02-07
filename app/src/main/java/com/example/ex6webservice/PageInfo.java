@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -31,7 +30,6 @@ public class PageInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String x = DataStorage.getInstance().getMaDonnee();
         String monurl2 = "https://adrien-fevre.fr/Balladins/administration/webservice/information.php?txtnum=" + DataStorage.getInstance().getMaDonnee();
         PageInfo.ConnectionServeurLycees cnnSrvLyc = new PageInfo.ConnectionServeurLycees(monurl2);
         cnnSrvLyc.execute();
@@ -47,7 +45,6 @@ public class PageInfo extends Fragment {
     private void afficherFluxJsonDansListView(String unechainejson) {
         try {
             TextView txtTitle = getView().findViewById(R.id.title);
-            ImageView imgHotel = getView().findViewById(R.id.imgHotel);
 
             TextView description1 = getView().findViewById(R.id.description1);
             TextView description2 = getView().findViewById(R.id.description2);
@@ -61,11 +58,8 @@ public class PageInfo extends Fragment {
                 String cheminImage = "a" + unelement.getString("nomfichier");
                 listeDesChemins.add(cheminImage);
                 txtTitle.setText(unelement.getString("nom"));
-//                String nomImage = unelement.getString("nomfichier");
-//                int idImage = getResources().getIdentifier("a"+nomImage, "drawable", requireContext().getPackageName());
-//                monImageView.setImageResource(R.drawable.a44);
-                description1.setText(unelement.getString("adr1"));
-                description2.setText(unelement.getString("ville"));
+                description1.setText("Adresse: " + unelement.getString("adr1"));
+                description2.setText("Ville: " + unelement.getString("ville"));
             }
             if (!listeDesChemins.isEmpty()) {
                 afficherImage(listeDesChemins.get(indiceImageCourante), monImageView);
@@ -121,7 +115,7 @@ public class PageInfo extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_SHORT).show();
             afficherFluxJsonDansListView(s);
         }
 

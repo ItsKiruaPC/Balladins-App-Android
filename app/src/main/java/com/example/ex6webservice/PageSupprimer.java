@@ -54,7 +54,7 @@ public class PageSupprimer extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_LONG).show();
         }
 
         @Override

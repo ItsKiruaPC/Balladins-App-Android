@@ -2,17 +2,18 @@ package com.example.ex6webservice;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,8 +23,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class PageReserv extends Fragment {
+
+    private int indiceImageCourante = 0;
+
+    private ArrayList<String> listeDesChemins;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,13 +42,10 @@ public class PageReserv extends Fragment {
         btnchercher.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code à réaliser sur clic du bouton btnajouter
-
                 String monurl = "https://adrien-fevre.fr/Balladins/administration/webservice/reservation.php?txtnum=" + txtnum.getText().toString() + "&txtcode=" + txtcode.getText().toString();
                 PageReserv.ConnectionServeurLycees cnnSrvLyc = new PageReserv.ConnectionServeurLycees(monurl);
                 cnnSrvLyc.execute();
-
             }
-
         });
         return view;
     }
@@ -50,38 +53,69 @@ public class PageReserv extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     private void afficherFluxJsonDansListView(String unechainejson) {
         try {
-            ListView monlistview = getView().findViewById(R.id.lstlycee);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
-            ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
+            MaterialCardView cardView = getView().findViewById(R.id.card);
+            cardView.setVisibility(getView().VISIBLE);
+            TextView txtTitle = getView().findViewById(R.id.title);
+            TextView description1 = getView().findViewById(R.id.description1);
+            TextView description2 = getView().findViewById(R.id.description2);
+            Button btn1 = getView().findViewById(R.id.button1);
+            Button btn2 = getView().findViewById(R.id.button2);
+            listeDesChemins = new ArrayList<>();
             JSONArray tblelements = new JSONArray(unechainejson);
+            ImageView monImageView = getView().findViewById(R.id.imgHotel);
             for (int i = 0; i < tblelements.length(); i++) {
                 JSONObject unelement = tblelements.getJSONObject(i);
-                adapter.add(unelement.getString("nom"));
-                adapter2.add(unelement.getString("nom") + " - " + unelement.getString("adr1") + " - " + unelement.getString("tel"));
+                String cheminImage = "a" + unelement.getString("nomfichier");
+                listeDesChemins.add(cheminImage);
+                txtTitle.setText(unelement.getString("nom"));
+                description1.setText("Date de début: " + unelement.getString("datedeb") + " \nDate de Fin " + unelement.getString("datefin"));
+                description2.setText("Numéro de réservation: " + unelement.getString("nores") + "\nCode d'accée: " + unelement.getString("codeacces"));
             }
-            monlistview.setAdapter(adapter2);
-            monlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    //Lors de l'évènement, position contient l'index de la ligne cliquée
-                    String x = adapter2.getItem(position);
-                    //Affichage temporaire dans une petite fenêtre
-                    Toast.makeText(getContext(), x, Toast.LENGTH_SHORT).show();
-                    JSONObject unelemente = null;
-                    try {
-                        unelemente = tblelements.getJSONObject(position);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
+            if (!listeDesChemins.isEmpty()) {
+                afficherImage(listeDesChemins.get(indiceImageCourante), monImageView);
+            }
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    afficherImagePrecedente(monImageView);
+                }
+            });
+            btn2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    afficherImageSuivante(monImageView);
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void afficherImagePrecedente(ImageView monImageView) {
+        if (indiceImageCourante > 0) {
+            indiceImageCourante--;
+            String cheminImage = listeDesChemins.get(indiceImageCourante);
+            afficherImage(cheminImage, monImageView);
+            Log.d("BoutonPrecedent", "Image précédente affichée " + cheminImage);
+        }
+    }
+
+    private void afficherImageSuivante(ImageView monImageView) {
+        if (indiceImageCourante < listeDesChemins.size() - 1) {
+            indiceImageCourante++;
+            String cheminImage = listeDesChemins.get(indiceImageCourante);
+            afficherImage(cheminImage, monImageView);
+            Log.d("BoutonSuivant", "Image suivante affichée " + cheminImage);
+        }
+    }
+
+    private void afficherImage(String cheminImage, ImageView monImageView) {
+        int resID = getResources().getIdentifier(cheminImage.replace(".jpg", ""), "drawable", requireContext().getPackageName());
+        monImageView.setImageResource(resID);
     }
 
     private class ConnectionServeurLycees extends AsyncTask<Void, Void, String> {
@@ -95,7 +129,7 @@ public class PageReserv extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_LONG).show();
             afficherFluxJsonDansListView(s);
         }
 

@@ -22,7 +22,7 @@
                 android:id="@+id/imgHotel"
                 android:layout_width="match_parent"
                 android:layout_height="194dp"
-                android:contentDescription=""
+                android:contentDescription="@string/image_de_l_h_tel"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
@@ -68,20 +68,18 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button1"
-                    style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="Précedent" />
+                    android:text="@string/pr_cedent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button2"
-                    style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Suivant" />
+                    android:text="@string/suivant" />
             </LinearLayout>
 
         </LinearLayout>

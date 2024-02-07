@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -87,7 +86,7 @@ public class PageHotel extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_SHORT).show();
             afficherFluxJsonDansListView(s);
         }
 
