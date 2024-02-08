@@ -28,16 +28,15 @@ import java.util.ArrayList;
 public class PageReserv extends Fragment {
 
     private int indiceImageCourante = 0;
-
     private ArrayList<String> listeDesChemins;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_reserv, container, false);
+        Button btnchercher = view.findViewById(R.id.btnchercher);
         EditText txtnum = view.findViewById(R.id.txtnum);
         EditText txtcode = view.findViewById(R.id.txtcode);
-        Button btnchercher = view.findViewById(R.id.btnchercher);
         // Attribuer un écouteur d'évènement au bouton btnajouter
         btnchercher.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -58,7 +57,6 @@ public class PageReserv extends Fragment {
     private void afficherFluxJsonDansListView(String unechainejson) {
         try {
             MaterialCardView cardView = getView().findViewById(R.id.card);
-            cardView.setVisibility(getView().VISIBLE);
             TextView txtTitle = getView().findViewById(R.id.title);
             TextView description1 = getView().findViewById(R.id.description1);
             TextView description2 = getView().findViewById(R.id.description2);
@@ -67,17 +65,31 @@ public class PageReserv extends Fragment {
             listeDesChemins = new ArrayList<>();
             JSONArray tblelements = new JSONArray(unechainejson);
             ImageView monImageView = getView().findViewById(R.id.imgHotel);
-            for (int i = 0; i < tblelements.length(); i++) {
-                JSONObject unelement = tblelements.getJSONObject(i);
-                String cheminImage = "a" + unelement.getString("nomfichier");
-                listeDesChemins.add(cheminImage);
-                txtTitle.setText(unelement.getString("nom"));
-                description1.setText("Date de début: " + unelement.getString("datedeb") + " \nDate de Fin " + unelement.getString("datefin"));
-                description2.setText("Numéro de réservation: " + unelement.getString("nores") + "\nCode d'accée: " + unelement.getString("codeacces"));
+            TextView txtError = getView().findViewById(R.id.labelError);
+            if (tblelements.length() == 0) {
+                txtError.setVisibility(View.VISIBLE);
+                txtError.setText("La réservation souhaitée n'existe pas !");
+
+                cardView.setVisibility(View.GONE);
+            } else {
+                txtError.setVisibility(View.GONE);
+                // Afficher les éléments s'il y en a
+                cardView.setVisibility(View.VISIBLE);
+                for (int i = 0; i < tblelements.length(); i++) {
+                    JSONObject unelement = tblelements.getJSONObject(i);
+                    String cheminImage = "a" + unelement.getString("nomfichier");
+                    listeDesChemins.add(cheminImage);
+                    txtTitle.setText(unelement.getString("nom"));
+                    description1.setText("Téléphone: " + unelement.getString("tel") + "\nDate de début: " + unelement.getString("datedeb") + " \nDate de Fin " + unelement.getString("datefin"));
+                    description2.setText("Numéro de réservation: " + unelement.getString("nores") + "\nCode d'accée: " + unelement.getString("codeacces"));
+                }
             }
+
+
             if (!listeDesChemins.isEmpty()) {
                 afficherImage(listeDesChemins.get(indiceImageCourante), monImageView);
             }
+
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

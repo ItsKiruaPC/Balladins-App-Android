@@ -19,7 +19,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/num_ro_de_r_servation" />
+        android:text="@string/num_ro_de_r_servation"
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/txtnum"
@@ -33,7 +34,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="@string/code_d_acc_s" />
+        android:text="@string/code_d_acc_s"
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/txtcode"
@@ -54,6 +56,5 @@
         android:id="@+id/label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:text="" />
+        android:layout_marginTop="240dp" />
 </FrameLayout>

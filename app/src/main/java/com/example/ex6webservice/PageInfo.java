@@ -60,6 +60,7 @@ public class PageInfo extends Fragment {
                 txtTitle.setText(unelement.getString("nom"));
                 description1.setText("Adresse: " + unelement.getString("adr1"));
                 description2.setText("Ville: " + unelement.getString("ville"));
+                description2.setText("Téléphone: " + unelement.getString("tel"));
             }
             if (!listeDesChemins.isEmpty()) {
                 afficherImage(listeDesChemins.get(indiceImageCourante), monImageView);
