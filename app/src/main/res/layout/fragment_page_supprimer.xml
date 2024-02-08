@@ -45,7 +45,7 @@
         android:layout_marginTop="120dp" />
 
     <Button
-        android:id="@+id/btnchercher"
+        android:id="@+id/btnsupprimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -56,5 +56,8 @@
         android:id="@+id/label"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:gravity="center"
         android:layout_marginTop="240dp" />
 </FrameLayout>

@@ -1,11 +1,13 @@
 package com.example.ex6webservice;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,9 +46,20 @@ public class PageReserv extends Fragment {
                 String monurl = "https://adrien-fevre.fr/Balladins/administration/webservice/reservation.php?txtnum=" + txtnum.getText().toString() + "&txtcode=" + txtcode.getText().toString();
                 PageReserv.ConnectionServeurLycees cnnSrvLyc = new PageReserv.ConnectionServeurLycees(monurl);
                 cnnSrvLyc.execute();
+                txtnum.setText(null);
+                txtcode.setText(null);
+                hideKeyboard();
             }
         });
         return view;
+    }
+    //Permet de cacher le clavier une fois que l'on appuyé sur rechercher
+    private void hideKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override
@@ -56,6 +69,7 @@ public class PageReserv extends Fragment {
 
     private void afficherFluxJsonDansListView(String unechainejson) {
         try {
+            //instanciation de variable du layout
             MaterialCardView cardView = getView().findViewById(R.id.card);
             TextView txtTitle = getView().findViewById(R.id.title);
             TextView description1 = getView().findViewById(R.id.description1);
@@ -84,12 +98,9 @@ public class PageReserv extends Fragment {
                     description2.setText("Numéro de réservation: " + unelement.getString("nores") + "\nCode d'accée: " + unelement.getString("codeacces"));
                 }
             }
-
-
             if (!listeDesChemins.isEmpty()) {
                 afficherImage(listeDesChemins.get(indiceImageCourante), monImageView);
             }
-
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -141,7 +152,6 @@ public class PageReserv extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            //Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_LONG).show();
             afficherFluxJsonDansListView(s);
         }
 

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class PageInfo extends Fragment {
 
+    //Instanciation de variables
     private int indiceImageCourante = 0;
     private ArrayList<String> listeDesChemins;
 
@@ -33,7 +34,7 @@ public class PageInfo extends Fragment {
         String monurl2 = "https://adrien-fevre.fr/Balladins/administration/webservice/information.php?txtnum=" + DataStorage.getInstance().getMaDonnee();
         PageInfo.ConnectionServeurLycees cnnSrvLyc = new PageInfo.ConnectionServeurLycees(monurl2);
         cnnSrvLyc.execute();
-        // Inflate the layout for this fragment
+        // Permet d'afficher la vue du fragment
         return inflater.inflate(R.layout.fragment_page_info, container, false);
     }
 
@@ -44,24 +45,28 @@ public class PageInfo extends Fragment {
 
     private void afficherFluxJsonDansListView(String unechainejson) {
         try {
+            //instanciation de variable du layout
             TextView txtTitle = getView().findViewById(R.id.title);
-
             TextView description1 = getView().findViewById(R.id.description1);
             TextView description2 = getView().findViewById(R.id.description2);
+            TextView description3 = getView().findViewById(R.id.description3);
             Button btn1 = getView().findViewById(R.id.button1);
             Button btn2 = getView().findViewById(R.id.button2);
             listeDesChemins = new ArrayList<>();
+
             JSONArray tblelements = new JSONArray(unechainejson);
             ImageView monImageView = getView().findViewById(R.id.imgHotel);
             for (int i = 0; i < tblelements.length(); i++) {
                 JSONObject unelement = tblelements.getJSONObject(i);
+                //Appropriation de données dans des variables ou liste
                 String cheminImage = "a" + unelement.getString("nomfichier");
                 listeDesChemins.add(cheminImage);
                 txtTitle.setText(unelement.getString("nom"));
                 description1.setText("Adresse: " + unelement.getString("adr1"));
                 description2.setText("Ville: " + unelement.getString("ville"));
-                description2.setText("Téléphone: " + unelement.getString("tel"));
+                description3.setText("Téléphone: " + unelement.getString("tel"));
             }
+            //Affichage d'image par le biais de méthodes
             if (!listeDesChemins.isEmpty()) {
                 afficherImage(listeDesChemins.get(indiceImageCourante), monImageView);
             }
@@ -99,7 +104,7 @@ public class PageInfo extends Fragment {
             Log.d("BoutonSuivant", "Image suivante affichée " + cheminImage);
         }
     }
-
+    //Affiche les images
     private void afficherImage(String cheminImage, ImageView monImageView) {
         int resID = getResources().getIdentifier(cheminImage.replace(".jpg", ""), "drawable", requireContext().getPackageName());
         monImageView.setImageResource(resID);
@@ -116,7 +121,6 @@ public class PageInfo extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            //Toast.makeText(getContext(), "Réponse reçue", Toast.LENGTH_SHORT).show();
             afficherFluxJsonDansListView(s);
         }
 
