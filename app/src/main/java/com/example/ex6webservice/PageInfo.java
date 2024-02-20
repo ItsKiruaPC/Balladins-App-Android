@@ -53,11 +53,13 @@ public class PageInfo extends Fragment {
             Button btn1 = getView().findViewById(R.id.button1);
             Button btn2 = getView().findViewById(R.id.button2);
             listeDesChemins = new ArrayList<>();
-
             JSONArray tblelements = new JSONArray(unechainejson);
             ImageView monImageView = getView().findViewById(R.id.imgHotel);
+            System.out.println(tblelements);
+            ////Boucle pour les images sinon pas besoin
             for (int i = 0; i < tblelements.length(); i++) {
                 JSONObject unelement = tblelements.getJSONObject(i);
+
                 //Appropriation de données dans des variables ou liste
                 String cheminImage = "a" + unelement.getString("nomfichier");
                 listeDesChemins.add(cheminImage);

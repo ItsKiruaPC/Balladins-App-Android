@@ -89,6 +89,7 @@ public class PageReserv extends Fragment {
                 txtError.setVisibility(View.GONE);
                 // Afficher les éléments s'il y en a
                 cardView.setVisibility(View.VISIBLE);
+                //Boucle pour les images sinon pas besoin
                 for (int i = 0; i < tblelements.length(); i++) {
                     JSONObject unelement = tblelements.getJSONObject(i);
                     String cheminImage = "a" + unelement.getString("nomfichier");
