@@ -1,7 +1,11 @@
 # Application en Java (Android Studio) sur Balladins (Chaine d'hôtellerie)
 ## Projet réalisé en 2ème année de BTS SIO
->[!IMPORTANT]
+>[!NOTE]
 > Fait par Adrien
+
+>[!IMPORTANT]
+> ## Complexité ajoutée
+> Affichage d'image et bouton pour défilé
 
 ## Nous avions 4 fonctionnalités à faire et intégrer dans l'application
 ## **<ins>Fonctionnalité 1</ins>**
